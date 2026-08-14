@@ -7,7 +7,6 @@ import lcd_gfx
 import ST7735
 import time 
 import math
-#import cv2
 #CONSTANTS
 image_path = "cat1.bin"
 buttons = [10, 11, 14, 15]
@@ -68,7 +67,7 @@ def show_temp():
     if temp >= 20:
         feels_temp = feels_like_temp_hot(temp,humid)
     else:
-        feels_temp = 0
+        feels_temp = temp
     lcd.p_string(20,50,'Temp.: ' + str(temp))
     lcd.p_string(20,80,'Humid.: ' + str(humid)+'%')
     lcd.p_string(20,110,'feels like: ' + str(feels_temp))
@@ -94,6 +93,9 @@ def main():
         if current_State == "Temp" and last_state != "Temp":
             lcd.fill_screen(lcd.rgb_to_565(15, 23, 42))
             show_temp()
+        else:
+            if current_State == "Temp":
+                show_temp()
         if current_State == "Image" and last_state != "Image":
             show_picture(image_path)
         last_up_state = up_state
